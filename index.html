@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NivaBliss — Luxury Handmade Natural Soaps</title>
+
+  <!-- Premium fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink: #16161a;
+      --muted: rgba(22,22,26,.72);
+
+      --panel: rgba(255,255,255,.72);
+      --panel2: rgba(255,255,255,.58);
+      --stroke: rgba(10,10,12,.12);
+
+      --gold: #caa24a;
+
+      --shadow: 0 18px 55px rgba(20,20,35,.14);
+      --shadow2: 0 10px 28px rgba(20,20,35,.14);
+
+      --radius2: 28px;
+      --max: 1160px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color: var(--ink);
+      font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      overflow-x:hidden;
+      background:#f5f5f7;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 22px; }
+
+    /* MAIN BACKGROUND */
+    .bg{
+      position:fixed;
+      inset:0;
+      z-index:-5;
+      background:
+        radial-gradient(1100px 800px at 15% 10%, rgba(231,201,112,.28), transparent 55%),
+        radial-gradient(1000px 700px at 85% 25%, rgba(140,200,180,.20), transparent 55%),
+        radial-gradient(900px 700px at 55% 92%, rgba(170,135,220,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.96));
+    }
+    .bg::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: url("marble-soap.jpg") center/cover no-repeat;
+      opacity: .92;
+      filter: saturate(1.04) contrast(1.05) brightness(1.04);
+      transform: scale(1.02);
+    }
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 520px at 30% 20%, rgba(255,255,255,.55), transparent 60%),
+        radial-gradient(900px 520px at 80% 55%, rgba(255,255,255,.35), transparent 60%);
+      mix-blend-mode: soft-light;
+      opacity: .75;
+      pointer-events:none;
+    }
+
+    /* NAV */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.45));
+      border-bottom:1px solid var(--stroke);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:16px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:220px;
+    }
+
+    /* ✅ LOGO IMAGE (logo.png) */
+    .logo-img{
+      width:46px;
+      height:46px;
+      object-fit:contain;
+      border-radius:14px;
+      padding:6px;
+      background: rgba(255,255,255,.70);
+      box-shadow:0 12px 24px rgba(20,20,35,.18);
+      border:1px solid rgba(10,10,12,.10);
+    }
+
+    .brand h1{
+      margin:0;
+      font-family:"Cinzel", serif;
+      letter-spacing:.08em;
+      font-size:18px;
+      line-height:1.1;
+    }
+    .brand small{
+      display:block;
+      margin-top:3px;
+      color: var(--muted);
+      font-size:12px;
+      letter-spacing:.06em;
+    }
+
+    .navlinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(10,10,12,.12);
+      background: rgba(255,255,255,.60);
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      font-weight:800;
+      font-size:13px;
+      letter-spacing:.02em;
+    }
+    .pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.76);
+      border-color: rgba(10,10,12,.18);
+    }
+    .cta{
+      border:1px solid rgba(202,162,74,.35);
+      background: rgba(231,201,112,.28);
+      box-shadow: 0 12px 28px rgba(20,20,35,.15);
+    }
+
+    /* BUBBLES */
+    .bubbles{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-2;
+      overflow:hidden;
+    }
+    .bubble{
+      position:absolute;
+      bottom:-120px;
+      width:var(--s);
+      height:var(--s);
+      left:var(--x);
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), rgba(255,255,255,.30) 58%, rgba(255,255,255,0) 72%),
+        radial-gradient(circle at 70% 70%, rgba(231,201,112,.14), rgba(170,135,220,.12) 60%, rgba(255,255,255,0) 78%);
+      border:1px solid rgba(10,10,12,.08);
+      opacity:.55;
+      animation: floatUp var(--d) linear infinite;
+      backdrop-filter: blur(1px);
+    }
+    @keyframes floatUp{
+      0% { transform: translateY(0) translateX(0) scale(1); }
+      100% { transform: translateY(-120vh) translateX(var(--dx)) scale(1.08); }
+    }
+
+    /* SPLASH */
+    .splash{
+      position:fixed;
+      inset:-40%;
+      z-index:30;
+      pointer-events:none;
+      opacity:0;
+      transform: scale(.94);
+      transition: opacity .35s ease, transform .35s ease;
+      background:
+        radial-gradient(closest-side at 25% 30%, rgba(231,201,112,.45), transparent 70%),
+        radial-gradient(closest-side at 70% 35%, rgba(170,135,220,.36), transparent 72%),
+        radial-gradient(closest-side at 45% 70%, rgba(140,200,180,.32), transparent 72%);
+      filter: blur(10px);
+      mix-blend-mode: multiply;
+    }
+    #home:target ~ .splash,
+    #products:target ~ .splash,
+    #about:target ~ .splash,
+    #contact:target ~ .splash{
+      opacity:1;
+      transform: scale(1.02);
+    }
+
+    main{ position:relative; }
+    section{ padding:70px 0 40px; scroll-margin-top:90px; }
+    .hero{ padding-top:56px; }
+
+    /* HERO */
+    .card{
+      border-radius:var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.58));
+      border:1px solid rgba(10,10,12,.10);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      backdrop-filter: blur(16px);
+    }
+    .grid-hero{
+      display:grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width:980px){ .grid-hero{ grid-template-columns:1fr; } }
+    .hero-left{
+      padding:34px 30px;
+      min-height: 440px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(202,162,74,.30);
+      background: rgba(231,201,112,.25);
+      width: fit-content;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:11px;
+      font-weight:900;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(202,162,74,1));
+      box-shadow:0 0 16px rgba(202,162,74,.25);
+    }
+    .hero-left h2{
+      margin: 12px 0 0;
+      font-family:"Cinzel", serif;
+      font-weight:700;
+      font-size: 44px;
+      line-height:1.08;
+      letter-spacing:.02em;
+    }
+    .hero-left p{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size:15px;
+      line-height:1.75;
+      max-width: 58ch;
+    }
+    .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(10,10,12,.14);
+      background: rgba(255,255,255,.70);
+      box-shadow: var(--shadow2);
+      font-weight:900;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.82); }
+    .btn.primary{
+      border-color: rgba(202,162,74,.40);
+      background: rgba(231,201,112,.32);
+    }
+
+    .hero-right{ min-height: 440px; position:relative; }
+    .hero-media{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.40)),
+        url("marble-soap.jpg") center/cover no-repeat;
+      filter:saturate(1.02) contrast(1.04);
+    }
+
+    /* SECTION HEAD */
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin: 22px 0 18px;
+    }
+    .section-head h3{
+      margin:0;
+      font-family:"Cinzel", serif;
+      font-size: 26px;
+      letter-spacing:.04em;
+    }
+    .section-head p{
+      margin:0;
+      color: var(--muted);
+      max-width: 60ch;
+      line-height:1.65;
+      font-size:14px;
+    }
+    @media (max-width:780px){ .section-head{ flex-direction:column; align-items:flex-start; } }
+
+    /* PRODUCTS (ONLY 3) */
+    .products{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+    }
+    @media (max-width:1100px){ .products{ grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width:620px){ .products{ grid-template-columns: 1fr; } }
+
+    /* Darker / more visible product cards */
+    .product{
+      border-radius:22px;
+      border:1px solid rgba(10,10,12,.16);
+      box-shadow: 0 16px 40px rgba(20,20,35,.20);
+      overflow:hidden;
+      position:relative;
+      isolation:isolate;
+      transition: transform .25s ease, border-color .25s ease;
+      backdrop-filter: blur(10px);
+      color: #121218;
+      min-height: 420px;
+    }
+    .product:hover{
+      transform: translateY(-4px);
+      border-color: rgba(10,10,12,.22);
+    }
+
+    /* overlay for readability */
+    .product::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.58));
+      z-index:0;
+    }
+
+    .product .top, .product p, .meta, .art{
+      position:relative;
+      z-index:1;
+    }
+
+    /* Product background photos */
+    .product.haldi{ background: url("haldi.jpg") center/cover no-repeat; }
+    .product.neem{  background: url("neem.jpg") center/cover no-repeat; }
+    .product.aloe{  background: url("aloe.jpg") center/cover no-repeat; }
+
+    .product .top{
+      padding:16px 16px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .tag{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      color: rgba(22,22,26,.92);
+      border:1px solid rgba(202,162,74,.40);
+      background: rgba(231,201,112,.30);
+      padding:7px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .product h4{
+      margin:0;
+      font-family:"Cinzel", serif;
+      letter-spacing:.04em;
+      font-size:18px;
+      line-height:1.2;
+    }
+    .product p{
+      margin:10px 16px 14px;
+      color: rgba(22,22,26,.78);
+      font-size:13px;
+      line-height:1.7;
+    }
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin: 0 16px 16px;
+    }
+    .chip{
+      font-size:12px;
+      color: rgba(22,22,26,.90);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(10,10,12,.14);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 10px 22px rgba(20,20,35,.10);
+    }
+
+    .art{
+      margin: 0 14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(10,10,12,.10);
+      background: rgba(255,255,255,.62);
+      overflow:hidden;
+    }
+
+    /* Footer */
+    .footer{
+      padding:30px 0 40px;
+      color: rgba(22,22,26,.62);
+      text-align:center;
+      font-size:13px;
+    }
+
+    /* Bigger About + Contact blocks */
+    .big-card{
+      padding: 34px !important;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .big-card p{
+      font-size: 15.5px;
+      line-height: 1.9;
+    }
+
+    html{ scroll-behavior:smooth; }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+
+  <!-- Floating bubbles -->
+  <div class="bubbles" aria-hidden="true">
+    <span class="bubble" style="--s:54px; --x:12%; --d:16s; --dx:40px;"></span>
+    <span class="bubble" style="--s:28px; --x:26%; --d:12s; --dx:-30px;"></span>
+    <span class="bubble" style="--s:72px; --x:38%; --d:22s; --dx:55px;"></span>
+    <span class="bubble" style="--s:36px; --x:52%; --d:14s; --dx:-40px;"></span>
+    <span class="bubble" style="--s:60px; --x:64%; --d:20s; --dx:35px;"></span>
+    <span class="bubble" style="--s:26px; --x:76%; --d:11s; --dx:-25px;"></span>
+    <span class="bubble" style="--s:80px; --x:86%; --d:24s; --dx:60px;"></span>
+    <span class="bubble" style="--s:44px; --x:92%; --d:17s; --dx:-35px;"></span>
+  </div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <!-- ✅ USING YOUR REAL LOGO FILE -->
+          <img class="logo-img" src="logo.png" alt="NivaBliss Logo">
+          <div>
+            <h1>NIVABLISS <small>Luxury Handmade Natural Soaps</small></h1>
+          </div>
+        </div>
+
+        <nav class="navlinks">
+          <a class="pill" href="#home">Home</a>
+          <a class="pill" href="#products">Varieties</a>
+          <a class="pill" href="#about">About</a>
+          <a class="pill cta" href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="hero">
+      <div class="wrap">
+        <div class="grid-hero">
+          <div class="card hero-left">
+            <div>
+              <div class="kicker"><span class="dot"></span> 100% Natural • 100% Authentic • Premium Quality</div>
+              <h2>Turn every bath into a <span style="color:var(--gold)">luxury ritual</span>.</h2>
+              <p>
+                NivaBliss creates handmade soaps with authentic, nature-first ingredients —
+                crafted to feel Premium
+                What makes NivaBliss different is our balance of nature and luxury. From ingredient selection to final packaging, every detail is thoughtfully curated. Our products are crafted for people who appreciate premium quality, gentle care, and a refined lifestyle. Whether for daily use or gifting, NivaBliss soaps are designed to leave a lasting impression.
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn primary" href="#products">Explore Varieties</a>
+                <a class="btn" href="#contact">Order / Enquiry</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card hero-right">
+            <div class="hero-media" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Signature Varieties</h3>
+          <p>Premium handmade soaps with authentic ingredients.</p>
+        </div>
+
+        <div class="products">
+
+          <!-- HALDI -->
+          <article class="product haldi">
+            <div class="top">
+              <div><h4>Haldi Glow</h4></div>
+              <span class="tag">Radiance</span>
+            </div>
+            <div class="art"></div>
+            <p>Golden turmeric-inspired bar — premium feel with a fresh, bright finish.Our signature soap collection is enriched with time-tested natural ingredients like Haldi, Neem, and Aloe Vera — each chosen for its unique skin benefits. Every variant is carefully formulated to cleanse, nourish, and rejuvenate the skin while offering a premium sensory experience with subtle natural aromas and a smooth, luxurious finish.</p>
+            <div class="meta">
+              <span class="chip">Haldi extract</span>
+              <span class="chip">Glow finish</span>
+              <span class="chip">Gentle cleanse</span>
+            </div>
+          </article>
+
+          <!-- NEEM -->
+          <article class="product neem">
+            <div class="top">
+              <div><h4>Neem Pure</h4></div>
+              <span class="tag">Fresh</span>
+            </div>
+            <div class="art"></div>
+            <p>Neem-inspired clean bar with a cool vibe — premium clarity for everyday use.</p>
+            <div class="meta">
+              <span class="chip">Neem extracts</span>
+              <span class="chip">Cool & fresh</span>
+              <span class="chip">Clean feel</span>
+            </div>
+          </article>
+
+          <!-- ALOE -->
+          <article class="product aloe">
+            <div class="top">
+              <div><h4>Aloe Vera Calm</h4></div>
+              <span class="tag">Soothing</span>
+            </div>
+            <div class="art"></div>
+            <p>Aloe-inspired calming bar — smooth, gentle, and premium for daily luxury.Our signature soap collection is enriched with time-tested natural ingredients like Haldi, Neem, and Aloe Vera — each chosen for its unique skin benefits. Every variant is carefully formulated to cleanse, nourish, and rejuvenate the skin while offering a premium sensory experience with subtle natural aromas and a smooth, luxurious finish.</p>
+            <div class="meta">
+              <span class="chip">Aloe vera</span>
+              <span class="chip">Soothing touch</span>
+              <span class="chip">Hydrating feel</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>About NivaBliss</h3>
+          <p>Handmade, authentic, premium — inspired by nature and finished like luxury.Our signature soap collection is enriched with time-tested natural ingredients like Haldi, Neem, and Aloe Vera — each chosen for its unique skin benefits. Every variant is carefully formulated to cleanse, nourish, and rejuvenate the skin while offering a premium sensory experience with subtle natural aromas and a smooth, luxurious finish.</p>
+        </div>
+
+        <div class="card big-card">
+          <p style="margin:0;color:var(--muted);">
+            We craft soaps with authentic natural ingredients and premium quality standards —
+            designed to look elegant, smell beautiful, and feel gentle on skin.
+            Our signature soap collection is enriched with time-tested natural ingredients like Haldi, Neem, and Aloe Vera — each chosen for its unique skin benefits. Every variant is carefully formulated to cleanse, nourish, and rejuvenate the skin while offering a premium sensory experience with subtle natural aromas and a smooth, luxurious finish.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <h3>Contact & Orders</h3>
+          <p>Send your requirements and we’ll respond. (Frontend-only form without backend.)</p>
+        </div>
+
+        <div class="card big-card">
+          <p style="margin:0;color:var(--muted);">
+            Email: nivabliss@example.com &nbsp; • &nbsp; Instagram: @nivabliss &nbsp; • &nbsp; WhatsApp: +91 XXXXX XXXXX
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="splash" aria-hidden="true"></div>
+
+    <footer class="footer">
+      © <span id="yr"></span> NivaBliss • Handmade Natural Soaps • Premium Quality
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
